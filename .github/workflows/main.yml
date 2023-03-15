@@ -1,0 +1,120 @@
+name: build sing-box with proxy providers
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 6 * * *'
+
+permissions:
+  contents: write
+  packages: write
+  
+jobs:
+  cross:
+    strategy:
+      matrix:
+        include:
+          - name: windows-amd64-v3
+            goos: windows
+            goarch: amd64
+            goamd64: v3
+
+          - name: linux-amd64-v3
+            goos: linux
+            goarch: amd64
+            goamd64: v3
+
+          - name: linux-arm64
+            goos: linux
+            goarch: arm64
+
+          - name: android-arm64
+            goos: android
+            goarch: arm64
+            goarm: 7
+
+      fail-fast: false
+
+    runs-on: ubuntu-latest
+    env:
+      GOOS: ${{ matrix.goos }}
+      GOARCH: ${{ matrix.goarch }}
+      GOAMD64: ${{ matrix.goamd64 }}
+      GOARM: ${{ matrix.goarm }}
+      GOMIPS: ${{ matrix.gomips }}
+      CGO_ENABLED: 0
+      TAGS: with_quic,with_grpc,with_wireguard,with_ech,with_utls,with_reality_server,with_clash_api,with_v2ray_api,with_gvisor,with_conntrack
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@main
+        with:
+          fetch-depth: 0
+          repository: SagerNet/sing-box
+
+      - name: Add proxy providers
+        run: |
+          cd ..
+          git clone https://github.com/qjebbs/sing-box sing-box.bak
+          cd sing-box.bak
+          COMMIT=$(git log --pretty=format:"%h-%s"|grep provider|awk -F "-" '{print $1}')
+          cd ../sing-box
+          git checkout dev
+          git remote add qjebbs https://github.com/qjebbs/sing-box
+          git fetch qjebbs
+          git cherry-pick $COMMIT || true
+
+      - name: Setup Go
+        uses: actions/setup-go@main
+        with:
+          go-version: 'stable'
+
+      - name: Build
+        id: build
+        run: make
+
+      - name: Rename Windows
+        if: ${{ contains(matrix.name, 'windows') }}
+        run: mv sing-box* sing-box-${{ matrix.name }}.exe
+
+      - name: Rename
+        if: ${{ contains(matrix.name, 'linux') || contains(matrix.name, 'bsd') || contains(matrix.name, 'darwin') || contains(matrix.name, 'android') }}
+        run: mv sing-box* sing-box-${{ matrix.name }}
+
+      - name: Release
+        uses: softprops/action-gh-release@master
+        with:
+          tag_name: latest
+          files: |
+            sing-box*
+
+  build-and-push:
+    needs: cross
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@main
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@master
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@master
+        
+      - name: Log in to the Container registry
+        uses: docker/login-action@master
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@master
+        with:
+          context: .
+          file: ./Dockerfile
+          platforms: linux/amd64/v3,linux/arm64
+          push: true
+          tags: ghcr.io/${{ github.repository }}:latest
