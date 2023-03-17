@@ -65,8 +65,8 @@ jobs:
           git remote add qjebbs https://github.com/qjebbs/sing-box
           git fetch qjebbs
           git cherry-pick $COMMIT || true
-          sed -e "s/SagerNet\/sing-geoip/CHIZI-0618\/v2ray-rules-dat/g" -i route/router.go
-          
+          sed "s/SagerNet\/sing-geoip/CHIZI-0618\/v2ray-rules-dat/g" -i route/router.go
+
       - name: Setup Go
         uses: actions/setup-go@main
         with:
