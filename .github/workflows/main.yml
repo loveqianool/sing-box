@@ -66,6 +66,7 @@ jobs:
           git fetch qjebbs
           git cherry-pick $COMMIT || true
           sed "s/SagerNet\/sing-geoip/CHIZI-0618\/v2ray-rules-dat/g" -i route/router.go
+          grep CHIZI-0618 route/router.go
 
       - name: Setup Go
         uses: actions/setup-go@main
