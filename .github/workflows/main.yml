@@ -71,7 +71,7 @@ jobs:
         run: mv sing-box* sing-box-${{ matrix.name }}.exe
 
       - name: Rename
-        if: ${{ contains(matrix.name, 'linux') || contains(matrix.name, 'bsd') || contains(matrix.name, 'darwin') || contains(matrix.name, 'android') }}
+        if: ${{ contains(matrix.name, 'linux') || contains(matrix.name, 'android') }}
         run: mv sing-box* sing-box-${{ matrix.name }}
 
       - name: Release
