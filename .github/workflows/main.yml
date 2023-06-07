@@ -43,7 +43,7 @@ jobs:
       GOARM: ${{ matrix.goarm }}
       GOMIPS: ${{ matrix.gomips }}
       CGO_ENABLED: 0
-      TAGS: with_quic,with_grpc,with_wireguard,with_ech,with_utls,with_reality_server,with_clash_api,with_v2ray_api,with_gvisor
+      TAGS: with_quic,with_wireguard,with_ech,with_utls,with_reality_server,with_clash_api,with_gvisor
 
     steps:
       - name: Checkout
@@ -54,8 +54,8 @@ jobs:
 
       - name: Add proxy providers
         run: |
-          sed "s/SagerNet\/sing-geoip/CHIZI-0618\/v2ray-rules-dat/g" -i route/router.go
-          sed "s/SagerNet\/sing-geosite/CHIZI-0618\/v2ray-rules-dat/g" -i route/router.go
+          sed "s/SagerNet\/sing-geoip/MetaCubeX\/meta-rules-dat/g" -i route/router.go
+          sed "s/SagerNet\/sing-geosite/MetaCubeX\/meta-rules-dat/g" -i route/router.go
 
       - name: Setup Go
         uses: actions/setup-go@main
