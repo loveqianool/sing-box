@@ -113,6 +113,8 @@ jobs:
           tags: ghcr.io/${{ github.repository }}:latest
           
       - uses: kitabisa/docker-slim-action@master
+        env:
+          DSLIM_HTTP_PROBE: false
         with:
           target: ${{ github.repository }}:latest
           tag: "slim"
