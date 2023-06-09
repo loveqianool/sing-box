@@ -119,7 +119,7 @@ jobs:
         env:
           DSLIM_HTTP_PROBE: false
         with:
-          target: ${{ github.repository }}
+          target: ghcr.io/${{ github.repository }}:latest --pull
           tag: "slim"
           
       - run: docker image push "${{ github.repository }}" --all-tags
