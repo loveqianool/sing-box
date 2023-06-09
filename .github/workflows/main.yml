@@ -111,15 +111,3 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: ghcr.io/${{ github.repository }}:latest
-          
-      - name: Before
-        run: docker image ls "${{ env.IMAGE }}"
-        
-      - uses: kitabisa/docker-slim-action@master
-        env:
-          DSLIM_HTTP_PROBE: false
-        with:
-          target: ghcr.io/${{ github.repository }}:latest --pull
-          tag: "slim"
-          
-      - run: docker image push "${{ github.repository }}" --all-tags
