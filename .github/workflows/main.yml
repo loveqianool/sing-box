@@ -47,10 +47,10 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@dev-next
+        uses: actions/checkout@main
         with:
           fetch-depth: 0
-          repository: SagerNet/sing-box
+          repository: SagerNet/sing-box@dev-next
 
       - name: Add proxy providers
         run: |
