@@ -50,7 +50,7 @@ jobs:
         uses: actions/checkout@main
         with:
           fetch-depth: 0
-          repository: SagerNet/sing-box@dev-next
+          repository: SagerNet/sing-box
 
       - name: Add proxy providers
         run: |
