@@ -47,7 +47,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@main
+        uses: actions/checkout@dev-next
         with:
           fetch-depth: 0
           repository: SagerNet/sing-box
