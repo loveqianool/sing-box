@@ -42,7 +42,7 @@ jobs:
       GOARCH: ${{ matrix.goarch }}
       GOARM: ${{ matrix.goarm }}
       CGO_ENABLED: 0
-      TAGS: with_quic,with_wireguard,with_ech,with_utls,with_reality_server,with_clash_api,with_gvisor
+      TAGS: with_quic,with_wireguard,with_ech,with_utls,with_reality_server,with_clash_api,with_gvisor,with_jstest,with_clash_dashboard,with_ruleprovider,with_proxyprovider
 
     steps:
       - name: Checkout
