@@ -39,7 +39,8 @@ jobs:
     env:
       GOOS: ${{ matrix.goos }}
       GOAMD64: ${{ matrix.goamd64 }}
-      GOARM: ${{ matrix.goarch }}
+      GOARCH: ${{ matrix.goarch }}
+      GOARM: ${{ matrix.goarm }}
       CGO_ENABLED: 0
       TAGS: with_quic,with_wireguard,with_ech,with_utls,with_reality_server,with_clash_api,with_gvisor
 
