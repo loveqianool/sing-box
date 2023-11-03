@@ -48,7 +48,6 @@ jobs:
         uses: actions/checkout@main
         with:
           repository: rnetx/sing-box
-          ref: dev-yaott
 
       - name: Setup Go
         uses: actions/setup-go@main
