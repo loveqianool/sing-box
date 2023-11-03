@@ -41,7 +41,6 @@ jobs:
       GOARCH: ${{ matrix.goarch }}
       GOAMD64: ${{ matrix.goamd64 }}
       GOARM: ${{ matrix.goarm }}
-      GOMIPS: ${{ matrix.gomips }}
       CGO_ENABLED: 0
       TAGS: with_quic,with_wireguard,with_ech,with_utls,with_reality_server,with_clash_api,with_gvisor
 
@@ -50,12 +49,8 @@ jobs:
         uses: actions/checkout@main
         with:
           fetch-depth: 0
-          repository: SagerNet/sing-box
-
-      - name: Add proxy providers
-        run: |
-          sed "s/SagerNet\/sing-geoip/MetaCubeX\/meta-rules-dat/g" -i route/router.go
-          sed "s/SagerNet\/sing-geosite/MetaCubeX\/meta-rules-dat/g" -i route/router.go
+          ref: building
+          repository: PuerNya/sing-box
 
       - name: Setup Go
         uses: actions/setup-go@main
