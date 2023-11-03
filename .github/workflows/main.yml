@@ -50,7 +50,7 @@ jobs:
         with:
           fetch-depth: 0
           repository: rnetx/sing-box
-          ref: dev-yaott
+          ref: dev
 
       - name: Setup Go
         uses: actions/setup-go@main
@@ -59,7 +59,7 @@ jobs:
 
       - name: Build
         id: build
-        run: make
+        run: make init_metacubexd && make
 
       - name: Rename Windows
         if: ${{ contains(matrix.name, 'windows') }}
