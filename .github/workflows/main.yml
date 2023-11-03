@@ -48,9 +48,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@main
         with:
-          fetch-depth: 0
-          ref: building
           repository: PuerNya/sing-box
+          ref: building
 
       - name: Setup Go
         uses: actions/setup-go@main
