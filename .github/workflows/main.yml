@@ -39,7 +39,7 @@ jobs:
     env:
       GOOS: ${{ matrix.goos }}
       GOAMD64: ${{ matrix.goamd64 }}
-      GOARM: ${{ matrix.goarm }}
+      GOARM: ${{ matrix.goarch }}
       CGO_ENABLED: 0
       TAGS: with_quic,with_wireguard,with_ech,with_utls,with_reality_server,with_clash_api,with_gvisor
 
@@ -47,7 +47,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@main
         with:
-          repository: rnetx/sing-box
+          repository: SagerNet/sing-box
 
       - name: Setup Go
         uses: actions/setup-go@main
