@@ -48,8 +48,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@main
         with:
-          repository: PuerNya/sing-box
-          ref: building
+          repository: rnetx/sing-box
+          ref: dev-yaott
 
       - name: Setup Go
         uses: actions/setup-go@main
