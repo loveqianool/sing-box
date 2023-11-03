@@ -38,7 +38,6 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GOOS: ${{ matrix.goos }}
-      GOARCH: ${{ matrix.goarch }}
       GOAMD64: ${{ matrix.goamd64 }}
       GOARM: ${{ matrix.goarm }}
       CGO_ENABLED: 0
