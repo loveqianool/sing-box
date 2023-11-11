@@ -42,15 +42,15 @@ jobs:
       GOARCH: ${{ matrix.goarch }}
       GOARM: ${{ matrix.goarm }}
       CGO_ENABLED: 0
-      TAGS: with_quic,with_wireguard,with_ech,with_utls,with_reality_server,with_clash_api,with_gvisor
+      TAGS: with_quic,with_wireguard,with_ech,with_utls,with_reality_server,with_clash_api,with_gvisor,with_ruleprovider,with_proxyprovider
 
     steps:
       - name: Checkout
         uses: actions/checkout@main
         with:
           fetch-depth: 0
-          repository: PuerNya/sing-box
-          ref: building
+          repository: rnetx/sing-box
+          ref: dev
 
       - name: Setup Go
         uses: actions/setup-go@main
