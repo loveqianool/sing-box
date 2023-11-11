@@ -42,15 +42,15 @@ jobs:
       GOARCH: ${{ matrix.goarch }}
       GOARM: ${{ matrix.goarm }}
       CGO_ENABLED: 0
-      TAGS: with_quic,with_wireguard,with_ech,with_utls,with_reality_server,with_clash_api,with_gvisor,with_jstest,with_clash_dashboard,with_ruleprovider,with_proxyprovider
+      TAGS: with_quic,with_wireguard,with_ech,with_utls,with_reality_server,with_clash_api,with_gvisor
 
     steps:
       - name: Checkout
         uses: actions/checkout@main
         with:
           fetch-depth: 0
-          repository: rnetx/sing-box
-          ref: dev
+          repository: PuerNya/sing-box
+          ref: building
 
       - name: Setup Go
         uses: actions/setup-go@main
@@ -59,7 +59,7 @@ jobs:
 
       - name: Build
         id: build
-        run: make init_metacubexd && make
+        run: make
 
       - name: Rename Windows
         if: ${{ contains(matrix.name, 'windows') }}
