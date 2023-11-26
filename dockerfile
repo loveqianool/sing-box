@@ -14,4 +14,16 @@ l=https://github.com/loveqianool/sing-box/releases/download/$(curl -s "https://a
 curl -sL $l -o /usr/local/bin/sing-box && \
 chmod +x /usr/local/bin/sing-box
 
-CMD ["sing-box", "run", "-c", "/etc/sing-box/config.json"]
+RUN <<EOF cat >> /entrypoint.sh
+#!/bin/sh
+if [[ -d "/etc/wireguard" ]]; then
+wg-quick up wg0
+else
+echo "WireGuard folder does not exist."
+fi
+sing-box run -c /etc/sing-box/config.json
+EOF
+
+RUN chmod +x /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
