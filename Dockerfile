@@ -22,6 +22,7 @@ RUN <<EOF cat >> /entrypoint.sh
 if [[ -d "/etc/wireguard" ]]; then
 chmod 600 /etc/wireguard/wg0.conf
 wg-quick up wg0
+sleep 3
 else
 echo "WireGuard folder does not exist."
 fi
