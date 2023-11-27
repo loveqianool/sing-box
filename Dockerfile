@@ -1,7 +1,3 @@
-FROM alpine
-
-RUN apk add --no-cache wireguard-tools curl tzdata unzip iproute2 iputils-ping nftables ca-certificates
-
 RUN sed -i "s:sysctl -q net.ipv4.conf.all.src_valid_mark=1:echo Skipping setting net.ipv4.conf.all.src_valid_mark:" /usr/bin/wg-quick \
  && sed -i "s:resolvconf -a:echo Skipping setting cmd resolvconf -a:" /usr/bin/wg-quick \
  && sed -i "s:resolvconf -d:echo Skipping setting cmd resolvconf -d:" /usr/bin/wg-quick \
@@ -17,6 +13,8 @@ l=https://github.com/loveqianool/sing-box/releases/download/$(curl -s "https://a
 curl -sL $l -o /usr/local/bin/sing-box && \
 chmod +x /usr/local/bin/sing-box
 
+COPY --from=ghcr.io/shadowsocks/ssserver-rust /usr/bin/ssserver /usr/bin/
+
 RUN <<EOF cat >> /entrypoint.sh
 #!/bin/sh
 if [[ -d "/etc/wireguard" ]]; then
@@ -26,7 +24,19 @@ sleep 3
 else
 echo "WireGuard folder does not exist."
 fi
+
+if [[ -f "/etc/sing-box/config.json" ]]; then
 sing-box run -c /etc/sing-box/config.json
+else
+    echo "sing-box config.json file does not exist."
+fi
+EOF
+
+if [[ -f "/etc/shadowsocks/config.json" ]]; then
+ssserver -c /etc/shadowsocks/config.json
+else
+    echo "ss config.json file does not exist."
+fi
 EOF
 
 RUN chmod +x /entrypoint.sh
