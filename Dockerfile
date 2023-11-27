@@ -22,22 +22,21 @@ COPY --from=ghcr.io/shadowsocks/ssserver-rust /usr/bin/ssserver /usr/bin/
 RUN <<EOF cat >> /entrypoint.sh
 #!/bin/sh
 if [[ -d "/etc/wireguard" ]]; then
-chmod 600 /etc/wireguard/wg0.conf
-wg-quick up wg0
-sleep 3
+    chmod 600 /etc/wireguard/wg0.conf
+    wg-quick up wg0
+    sleep 3
 else
-echo "WireGuard folder does not exist."
+    echo "WireGuard folder does not exist."
 fi
 
 if [[ -f "/etc/sing-box/config.json" ]]; then
-sing-box run -c /etc/sing-box/config.json
+    sing-box run -c /etc/sing-box/config.json
 else
     echo "sing-box config.json file does not exist."
 fi
-EOF
 
 if [[ -f "/etc/shadowsocks/config.json" ]]; then
-ssserver -c /etc/shadowsocks/config.json
+    ssserver -c /etc/shadowsocks/config.json
 else
     echo "ss config.json file does not exist."
 fi
