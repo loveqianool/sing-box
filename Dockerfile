@@ -1,3 +1,7 @@
+FROM alpine
+
+RUN apk add --no-cache wireguard-tools curl tzdata unzip iproute2 iputils-ping nftables ca-certificates
+
 RUN sed -i "s:sysctl -q net.ipv4.conf.all.src_valid_mark=1:echo Skipping setting net.ipv4.conf.all.src_valid_mark:" /usr/bin/wg-quick \
  && sed -i "s:resolvconf -a:echo Skipping setting cmd resolvconf -a:" /usr/bin/wg-quick \
  && sed -i "s:resolvconf -d:echo Skipping setting cmd resolvconf -d:" /usr/bin/wg-quick \
