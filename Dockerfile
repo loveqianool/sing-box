@@ -35,8 +35,8 @@ else
     echo "sing-box config.json file does not exist."
 fi
 
-if [[ -f "/etc/shadowsocks/config.json" || -f "/etc/shadowsocks-rust/config.json" ]]; then
-    ssserver -c /etc/shadowsocks/config.json
+if [[ -f "/etc/shadowsocks-rust/config.json" ]]; then
+    ssserver -c /etc/shadowsocks-rust/config.json
 else
     echo "ss config.json file does not exist."
 fi
