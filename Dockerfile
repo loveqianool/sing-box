@@ -36,7 +36,7 @@ else
 fi
 
 if [[ -f "/etc/shadowsocks-rust/config.json" ]]; then
-    ssserver -c /etc/shadowsocks-rust/config.json
+    ssserver -v -c /etc/shadowsocks-rust/config.json
 else
     echo "ss config.json file does not exist."
 fi
