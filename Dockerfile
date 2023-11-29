@@ -6,10 +6,10 @@ RUN sed -i "s:sysctl -q net.ipv4.conf.all.src_valid_mark=1:echo Skipping setting
  && sed -i "s:resolvconf -a:echo Skipping setting resolvconf -a:" /usr/bin/wg-quick \
  && sed -i "s:resolvconf -d:echo Skipping setting resolvconf -d:" /usr/bin/wg-quick \
  && sed -i "s: resolvconf -l:echo Skipping setting resolvconf -l:" /usr/bin/wg-quick \
- RUN wget https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geosite.dat \
- -O /usr/local/bin/geosite.dat \
- && wget https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geoip.dat \
- -O /usr/local/bin/geoip.dat
+ RUN wget https://github.com/malikshi/sing-box-geo/releases/latest/download/geosite.db \
+ -O /usr/local/bin/geosite.db \
+ && wget https://github.com/malikshi/sing-box-geo/releases/latest/download/geoip.db \
+ -O /usr/local/bin/geoip.db
  && curl https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/Cloudflare_CA.pem \
  -o /usr/local/share/ca-certificates/Cloudflare_CA.pem \
  && chmod 644 /usr/local/share/ca-certificates/Cloudflare_CA.pem \
