@@ -6,19 +6,15 @@ RUN sed -i "s:sysctl -q net.ipv4.conf.all.src_valid_mark=1:echo Skipping setting
  && sed -i "s:resolvconf -a:echo Skipping setting resolvconf -a:" /usr/bin/wg-quick \
  && sed -i "s:resolvconf -d:echo Skipping setting resolvconf -d:" /usr/bin/wg-quick \
  && sed -i "s: resolvconf -l:echo Skipping setting resolvconf -l:" /usr/bin/wg-quick \
- RUN wget https://github.com/malikshi/sing-box-geo/releases/latest/download/geosite.db \
- -O /usr/local/bin/geosite.db \
- && wget https://github.com/malikshi/sing-box-geo/releases/latest/download/geoip.db \
- -O /usr/local/bin/geoip.db
  && curl https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/Cloudflare_CA.pem \
  -o /usr/local/share/ca-certificates/Cloudflare_CA.pem \
  && chmod 644 /usr/local/share/ca-certificates/Cloudflare_CA.pem \
- && update-ca-certificates
+ && update-ca-certificates \
+ && touch /entrypoint.sh \
+ && chmod +x /entrypoint.sh
  
-RUN ARCH=$(arch) && \
-if [ "$ARCH" = "aarch64" ]; then ARCH=arm64; else ARCH=amd64-v3; fi && \
-l=https://github.com/loveqianool/sing-box/releases/download/$(curl -s "https://api.github.com/repos/loveqianool/sing-box/releases" | grep -m 1 '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')/sing-box-linux-$ARCH && \
-curl -sL $l -o /usr/local/bin/sing-box && \
+RUN if [ "$(arch)" = "aarch64" ]; then ARCH=arm64; else ARCH=amd64-v3; fi && \
+curl -sL "https://github.com/loveqianool/sing-box/releases/download/$(curl -s "https://api.github.com/repos/loveqianool/sing-box/releases" | grep -m 1 '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')/sing-box-linux-$ARCH" -o /usr/local/bin/sing-box && \
 chmod +x /usr/local/bin/sing-box
 
 COPY --from=ghcr.io/shadowsocks/ssserver-rust /usr/bin/ssserver /usr/bin/
@@ -45,7 +41,5 @@ else
     echo "ss config.json file does not exist."
 fi
 EOF
-
-RUN chmod +x /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
