@@ -19,7 +19,7 @@ COPY --from=ghcr.io/shadowsocks/ssserver-rust /usr/bin/ssserver /usr/bin/
 
 RUN <<EOF cat >> /z.sh
 #!/bin/sh
-if [[ -d "/etc/wireguard" ]]; then
+if [[ -e /etc/wireguard/*.conf ]]; then
     chmod 600 /etc/wireguard/wg0.conf
     wg-quick up wg0
     sleep 3
