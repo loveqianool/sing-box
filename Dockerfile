@@ -19,7 +19,7 @@ chmod +x /usr/local/bin/sing-box
 
 COPY --from=ghcr.io/shadowsocks/ssserver-rust /usr/bin/ssserver /usr/bin/
 
-RUN <<EOF cat >> /entrypoint.sh
+RUN <<EOF cat >> /z.sh
 #!/bin/sh
 if [[ -d "/etc/wireguard" ]]; then
     chmod 600 /etc/wireguard/wg0.conf
@@ -42,4 +42,4 @@ else
 fi
 EOF
 
-ENTRYPOINT ["/entrypoint.sh"]
+CMD ["sh", "/z.sh"]
