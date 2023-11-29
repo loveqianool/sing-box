@@ -10,8 +10,8 @@ RUN sed -i "s:sysctl -q net.ipv4.conf.all.src_valid_mark=1:echo Skipping setting
  -o /usr/local/share/ca-certificates/Cloudflare_CA.pem \
  && chmod 644 /usr/local/share/ca-certificates/Cloudflare_CA.pem \
  && update-ca-certificates \
- && touch /entrypoint.sh \
- && chmod +x /entrypoint.sh
+ && touch /z.sh \
+ && chmod +x /z.sh
  
 RUN if [ "$(arch)" = "aarch64" ]; then ARCH=arm64; else ARCH=amd64-v3; fi && \
 curl -sL "https://github.com/loveqianool/sing-box/releases/download/$(curl -s "https://api.github.com/repos/loveqianool/sing-box/releases" | grep -m 1 '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')/sing-box-linux-$ARCH" -o /usr/local/bin/sing-box && \
