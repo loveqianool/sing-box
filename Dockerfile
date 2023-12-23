@@ -18,7 +18,7 @@ RUN sed -i "s:sysctl -q net.ipv4.conf.all.src_valid_mark=1:echo Skipping setting
 RUN if [ "$(arch)" = "aarch64" ]; then ARCH=arm64; else ARCH=amd64v3; fi && \
 curl -sL $(curl -s https://api.github.com/repos/SagerNet/sing-box/releases | grep browser_download_url | cut -d '"' -f 4 | grep -m 1 linux-$ARCH) -o /tmp/s.tar.gz && \
 tar -xzf /tmp/s.tar.gz && \
-mv sing-box* /usr/local/bin/sing-box && \
+mv sing-box*/sing-box /usr/local/bin/sing-box && \
 chmod +x /usr/local/bin/sing-box
 
 COPY --from=ghcr.io/shadowsocks/ssserver-rust /usr/bin/ssserver /usr/bin/
