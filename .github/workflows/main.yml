@@ -42,7 +42,7 @@ jobs:
       GOARCH: ${{ matrix.goarch }}
       GOARM: ${{ matrix.goarm }}
       CGO_ENABLED: 0
-      TAGS: with_quic,with_wireguard,with_ech,with_utls,with_reality_server,with_clash_api,with_gvisor,with_ruleprovider,with_proxyprovider
+      TAGS: with_quic,with_wireguard,with_ech,with_utls,with_reality_server,with_clash_api,with_gvisor,with_outbound_provider
 
     steps:
       - name: Checkout
@@ -50,7 +50,7 @@ jobs:
         with:
           fetch-depth: 0
           repository: rnetx/sing-box
-          ref: dev
+          ref: next
 
       - name: Setup Go
         uses: actions/setup-go@main
